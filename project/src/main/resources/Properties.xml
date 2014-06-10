@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<liste_grandeurs>
+    <grandeur name="LONGUEUR">
+        <liste_units>
+            <unit coeff="1000" id="km" name="kilometre"/>
+            <unit coeff="100" id="hm" name="hectometre"/>
+            <unit coeff="10" id="dam" name="decametre"/>
+            <unit coeff="1" id="m" name="metre"/>
+            <unit coeff="0.1" id="dm" name="decimetre"/>
+            <unit coeff="0.01" id="cm" name="centimetre"/>
+            <unit coeff="0.001" id="mm" name="millimetre"/>
+            <unit coeff="0.9144" id="yd" name="yard" system="impérial"/>
+            <unit coeff="39.37" id="po" name="pouce" system="impérial"/>
+            <unit coeff="3.281" id="ft" name="pied" system="impérial"/>
+</liste_units>
+    </grandeur>
+    <grandeur name="TEMPS">
+        <liste_units>
+            <unit coeff="29030400" id="an" name="annee"/>
+            <unit coeff="2419200" id="mois" name="mois"/>
+            <unit coeff="604800" id="sem" name="semaine"/>
+            <unit coeff="86400" id="j" name="jour"/>
+            <unit coeff="3600" id="h" name="heure"/>
+            <unit coeff="60" id="m" name="minute"/>
+            <unit calibre="true" coeff="1" id="s" name="seconde"/>
+            <unit coeff="0.001" id="ms" name="milliseconde"/>
+        </liste_units>
+    </grandeur>
+    <grandeur name="MASSE">
+        <liste_units>
+            <unit coeff="1000000" id="t" name="tonne"/>
+            <unit coeff="1000" id="kg" name="kilogramme"/>
+            <unit coeff="1" id="g" name="gramme"/>
+            <unit coeff="453.59" id="lb" name="livre"/>
+            <unit coeff="28.35" id="oz" name="once"/>
+        	<unit coeff="10" id="test" name="test"/>
+</liste_units>
+    </grandeur>
+    <grandeur name="TEMPERATURE">
+        <liste_units>
+            <unit coeff="1.8" decalage="32" id="C" name="celsius"/>
+            <unit coeff="1" decalage="-459.67" id="K" name="kelvin"/>
+            <unit coeff="1" id="F" name="fahrenheit"/>
+        </liste_units>
+    </grandeur>
+
+<grandeur name="TEST">
+<liste_units/>
+</grandeur>
+</liste_grandeurs>
