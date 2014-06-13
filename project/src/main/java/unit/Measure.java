@@ -12,28 +12,28 @@ import java.math.BigDecimal;
 public class Measure {
 	
 	/**
-	 * Unite de la mesure
+	 * Measure's Unit
 	 */
 	private Unit unit;
 	
 	/**
-	 * Valuer de la mesure
+	 * Measure's Value
 	 */
 	private BigDecimal value;
 	
 	
 	/**
-	 * Constructeur par défaut
+	 * Default constructor
 	 */
 	public Measure(){
 		
 	}
 	
 	/**
-	 * Constructeur de la mesure
+	 * Measure constructor
 	 * 
-	 * @param unite unite de la mesure a instancier
-	 * @param value valeur de la mesure a instancier
+	 * @param unite unit of the measure
+	 * @param value value of the measure
 	 */
 	public Measure(Unit unit, BigDecimal value){
 		this.unit = unit;

@@ -46,7 +46,7 @@ import unit.Unit;
 public class Utils {
 	
 	/**
-	 * map which contains all the units classed by their category
+	 * map which contains all the units ordered by their category
 	 */
 	private static Map<String, ArrayList<Unit>> properties;
 	
@@ -162,30 +162,27 @@ public class Utils {
     		Element newListUnit = dom.createElement("liste_units");
     		newGrandeur.appendChild(newListUnit);
            
-            // on considère le document "doc" comme étant la source d'une 
-            // transformation XML
+    		// Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
              
-            // le résultat de cette transformation sera un flux d'écriture dans
-            // un fichier
+            // this result will be a writing flux in a file
             Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
              
-            // création du transformateur XML
+            // creation of the XML transormator
             Transformer transfo = null;
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
             } catch(TransformerConfigurationException e) {
-                System.err.println("Impossible de créer un transformateur XML.");
+                System.err.println("Impossible de cr�er un transformateur XML.");
                 System.exit(1);
             }
-            // configuration du transformateur
-            // sortie en XML
+            // configuration of the transformator
+            // XML output
             transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-            // inclut une déclaration XML (recommandé)
+            // include an XML declaration
             transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            // codage des caractères : UTF-8. Ce pourrait être également ISO-8859-1
             transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            // idente le fichier XML
+            // indent the XML file
             transfo.setOutputProperty(OutputKeys.INDENT, "yes");
             try {
                 transfo.transform(source, resultat);
@@ -226,15 +223,13 @@ public class Utils {
             	}
             }
            
-            // on considère le document "doc" comme étant la source d'une 
-            // transformation XML
+    		// Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
              
-            // le résultat de cette transformation sera un flux d'écriture dans
-            // un fichier
+            // this result will be a writing flux in a file
             Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
              
-            // création du transformateur XML
+            // creation of the XML transormator
             Transformer transfo = null;
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
@@ -242,14 +237,13 @@ public class Utils {
                 System.err.println("Impossible de créer un transformateur XML.");
                 System.exit(1);
             }
-            // configuration du transformateur
-            // sortie en XML
+            // configuration of the transformator
+            // XML output
             transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-            // inclut une déclaration XML (recommandé)
+            // include an XML declaration
             transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            // codage des caractères : UTF-8. Ce pourrait être également ISO-8859-1
             transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            // idente le fichier XML
+            // indent the XML file
             transfo.setOutputProperty(OutputKeys.INDENT, "yes");
             try {
                 transfo.transform(source, resultat);
@@ -343,15 +337,13 @@ public class Utils {
 	        	}
 	        }
 	       
-	        // on considère le document "doc" comme étant la source d'une 
-	        // transformation XML
+    		// Considering the "dom" document as the source of the XML transformation
 	        Source source = new DOMSource(dom);
 	         
-	        // le résultat de cette transformation sera un flux d'écriture dans
-	        // un fichier
+            // this result will be a writing flux in a file
 	        Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
 	         
-	        // création du transformateur XML
+	        // creation of the XML transformator
 	        Transformer transfo = null;
 	        try {
 	            transfo = TransformerFactory.newInstance().newTransformer();
@@ -359,12 +351,11 @@ public class Utils {
 	            System.err.println("Impossible de créer un transformateur XML.");
 	            System.exit(1);
 	        }
-	        // configuration du transformateur
-	        // sortie en XML
+	        // configuration of the transformator
+	        // XML output
 	        transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-	        // inclut une déclaration XML (recommandé)
+            // include an XML declaration
 	        transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-	        // codage des caractères : UTF-8. Ce pourrait être également ISO-8859-1
 	        transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
 	        // idente le fichier XML
 	        transfo.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -403,15 +394,13 @@ public class Utils {
             	}
             }
            
-            // on considère le document "doc" comme étant la source d'une 
-            // transformation XML
+    		// Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
              
-            // le résultat de cette transformation sera un flux d'écriture dans
-            // un fichier
+            // this result will be a writing flux in a file
             Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
              
-            // création du transformateur XML
+            // creation of the XML transformator
             Transformer transfo = null;
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
@@ -419,14 +408,13 @@ public class Utils {
                 System.err.println("Impossible de créer un transformateur XML.");
                 System.exit(1);
             }
-            // configuration du transformateur
-            // sortie en XML
+            // configuration of the transformator
+            // XML output
             transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-            // inclut une déclaration XML (recommandé)
+            // include a XML declaration
             transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            // codage des caractères : UTF-8. Ce pourrait être également ISO-8859-1
             transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            // idente le fichier XML
+            // indent the XML file
             transfo.setOutputProperty(OutputKeys.INDENT, "yes");
             try {
                 transfo.transform(source, resultat);
