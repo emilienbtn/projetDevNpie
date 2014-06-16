@@ -173,7 +173,7 @@ public class Utils {
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
             } catch(TransformerConfigurationException e) {
-                System.err.println("Impossible de créer un transformateur XML.");
+                System.err.println("Impossible de crï¿½er un transformateur XML.");
                 System.exit(1);
             }
             // configuration of the transformator

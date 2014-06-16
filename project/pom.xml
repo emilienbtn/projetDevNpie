@@ -7,6 +7,35 @@
 	<name>converter</name>
 	<url>http://maven.apache.org</url>
 	
+	<developers>
+    	<developer>
+        	<id>emilienbtn</id>
+        	<name>Emilien Buton</name>
+        	<email>emilien.buton@etu.univ-nantes.fr</email>
+        	<url>https://github.com/emilienbtn</url>
+        	<organization>http://www.univ-nantes.fr/</organization>
+        	<organizationUrl>http://www.univ-nantes.fr/</organizationUrl>
+        	<roles>
+            	<role>editor</role>
+            	<role>Developer</role>
+        	</roles>
+        	<timezone>1</timezone>
+    	</developer>
+    	<developer>
+        	<id>alexdufoi</id>
+        	<name>Alexandre Dufoi</name>
+        	<email>alexandre.dufoi@etu.univ-nantes.fr</email>
+        	<url>https://github.com/alexdufoi</url>
+        	<organization>http://www.univ-nantes.fr/</organization>
+        	<organizationUrl>http://www.univ-nantes.fr/</organizationUrl>
+        	<roles>
+            	<role>editor</role>
+            	<role>Developer</role>
+        	</roles>
+        	<timezone>1</timezone>
+    	</developer>
+	</developers>
+	
 	<properties>
 	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -31,6 +60,11 @@
 	                <target>1.7</target>
 	            </configuration>
 	        </plugin>
+	         <plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-site-plugin</artifactId>
+        		<version>3.3</version>
+      		</plugin>
 	    </plugins>
 	</build>
 	
@@ -53,5 +87,13 @@
 	        </plugin>
 	    </plugins>
 	</reporting>
+	
+	<distributionManagement>
+		<site>
+			<id>Website of the NPIE Project of Emilien Buton and Alexandre Dufoi</id>
+			<url></url>
+		</site>
+	</distributionManagement>
+		
 	
 </project>
