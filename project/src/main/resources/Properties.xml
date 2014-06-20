@@ -12,6 +12,7 @@
             <unit coeff="0.9144" id="yd" name="yard" system="impérial"/>
             <unit coeff="39.37" id="po" name="pouce" system="impérial"/>
             <unit coeff="3.281" id="ft" name="pied" system="impérial"/>
+<unit coeff="10" decalage="0" name="unitAdd"/>
 </liste_units>
     </grandeur>
     <grandeur name="TEMPS">
@@ -33,7 +34,7 @@
             <unit coeff="1" id="g" name="gramme"/>
             <unit coeff="453.59" id="lb" name="livre"/>
             <unit coeff="28.35" id="oz" name="once"/>
-        	<unit coeff="10" id="test" name="test"/>
+        	
 </liste_units>
     </grandeur>
     <grandeur name="TEMPERATURE">
@@ -44,7 +45,8 @@
         </liste_units>
     </grandeur>
 
-<grandeur name="TEST">
+
+<grandeur name="CATADD">
 <liste_units/>
 </grandeur>
 </liste_grandeurs>
