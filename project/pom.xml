@@ -5,8 +5,10 @@
     <artifactId>project</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>converter</name>
-    <url>http://maven.apache.org</url>
-  
+    <url>https://github.com/emilienbtn/projetDevNpie</url>
+    
+    <description>Converter project by Buton Emilien and Alexandre Dufoi adding usefull tools to enhance it</description>
+    
     <developers>
         <developer>
             <id>emilienbtn</id>
@@ -65,6 +67,40 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>1.7</targetJdk>
+                    <rulesets>
+                        <ruleset>rulesets/java/sunsecure.xml</ruleset>
+                        <ruleset>rulesets/java/naming.xml</ruleset>
+                    </rulesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.1.201405082137</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 	
@@ -85,13 +121,26 @@
                     </rulesets>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <show>public</show>
+                    <nohelp>true</nohelp>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.17</version>
+            </plugin>
         </plugins>
     </reporting>
-	
-    <distributionManagement>
-        <site>
-            <id>Website of the NPIE Project of Emilien Buton and Alexandre Dufoi</id>
-            <url></url>
-        </site>
-    </distributionManagement>
+
 </project>
