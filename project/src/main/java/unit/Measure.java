@@ -32,7 +32,7 @@ public class Measure {
 	/**
 	 * Measure constructor
 	 * 
-	 * @param unite unit of the measure
+	 * @param unit unit of the measure
 	 * @param value value of the measure
 	 */
 	public Measure(Unit unit, BigDecimal value){
@@ -53,6 +53,7 @@ public class Measure {
 		this.value = value;
 	}
 	
+        @Override
 	public String toString(){
 		return "Mesure = " + unit.getName() + " Valeur = " + value;
 	}

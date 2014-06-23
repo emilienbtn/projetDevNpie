@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package service;
 
@@ -38,22 +38,21 @@ import org.xml.sax.SAXException;
 
 import unit.Unit;
 
-
 /**
  * @author Emilien
  *
  */
 public class Utils {
-	
-	/**
-	 * map which contains all the units ordered by their category
-	 */
-	private static Map<String, ArrayList<Unit>> properties;
-	
-	/**
-	 * initialization of the map properties
-	 */
-	private static void initCategory() {
+
+    /**
+     * map which contains all the units ordered by their category
+     */
+    private static Map<String, ArrayList<Unit>> properties;
+
+    /**
+     * initialization of the map properties
+     */
+    private static void initCategory() {
 
         DocumentBuilderFactory dbf;
         DocumentBuilder db;
@@ -64,10 +63,10 @@ public class Utils {
         NodeList categoryList, unitList;
         Unit unitTemp;
         ArrayList<Unit> listUnits;
-        
+
         if (properties == null) {
-        	properties = new HashMap<>();
-            try{
+            properties = new HashMap<>();
+            try {
                 dbf = DocumentBuilderFactory.newInstance();
                 db = dbf.newDocumentBuilder();
                 dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
@@ -88,46 +87,48 @@ public class Utils {
                         unitTemp.setName(node.getAttributes().getNamedItem("name").getNodeValue());
                         BigDecimal bdTemp = new BigDecimal(node.getAttributes().getNamedItem("coeff").getNodeValue());
                         unitTemp.setRatio(bdTemp);
-                        if(node.getAttributes().getNamedItem("decalage")==null){
-                        	bdTemp = new BigDecimal("0");
-                        }else{
-                        	bdTemp = new BigDecimal(node.getAttributes().getNamedItem("decalage").getNodeValue());
+                        if (node.getAttributes().getNamedItem("decalage") == null) {
+                            bdTemp = new BigDecimal("0");
+                        } else {
+                            bdTemp = new BigDecimal(node.getAttributes().getNamedItem("decalage").getNodeValue());
                         }
                         unitTemp.setDecalage(bdTemp);
                         listUnits.add(unitTemp);
                     }
                     properties.put(category, listUnits);
                 }
-            
+
             } catch (FileNotFoundException ex) {
-            	System.out.println("File Not Found!");
+                System.out.println("File Not Found!");
             } catch (IOException | ParserConfigurationException | XPathExpressionException | DOMException | SAXException ex) {
-            	System.out.println(ex.toString());
+                System.out.println(ex.toString());
             }
         }
     }
-    
-	/**
-	 * Return the unit list of a category
-	 * @param category
-	 * @return the unit list of a category
-	 */
+
+    /**
+     * Return the unit list of a category
+     *
+     * @param category
+     * @return the unit list of a category
+     */
     public static ArrayList<Unit> getListeUnitsByCategory(String category) {
         if (properties == null || properties.isEmpty()) {
-        	initCategory();
+            initCategory();
         }
         return properties.get(category);
     }
-    
+
     /**
      * Return the unit in function of a category and a unit name
+     *
      * @param category
-     * @param UnitName
+     * @param unitName
      * @return the wished unit
      */
     public static Unit getUnit(String category, String unitName) {
         if (unitName != null) {
-        	ArrayList<Unit> listeUnits = Utils.getListeUnitsByCategory(category);
+            ArrayList<Unit> listeUnits = Utils.getListeUnitsByCategory(category);
             for (Unit unitTemp : listeUnits) {
                 if (unitTemp.getName().equalsIgnoreCase(unitName)) {
                     return unitTemp;
@@ -136,43 +137,43 @@ public class Utils {
         }
         return null;
     }
-    
-    
+
     /**
      * Function using dom to add a category in the xml file
+     *
      * @param category
-     * @throws ParserConfigurationException 
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws FileNotFoundException 
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws FileNotFoundException
      */
-    public static void addCategory(String category) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
-    	DocumentBuilderFactory dbf;
+    public static void addCategory(String category) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+        DocumentBuilderFactory dbf;
         DocumentBuilder db;
         Document dom;
-        
-    	if(!existCategory(category)){
-    		dbf = DocumentBuilderFactory.newInstance();
+
+        if (!existCategory(category)) {
+            dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
             dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("liste_grandeurs");
-    		Element newGrandeur = dom.createElement("grandeur");
-    		nodeListGrandeur.item(0).appendChild(newGrandeur);
-    		newGrandeur.setAttribute("name", category.toUpperCase());
-    		Element newListUnit = dom.createElement("liste_units");
-    		newGrandeur.appendChild(newListUnit);
-           
-    		// Considering the "dom" document as the source of the XML transformation
+            Element newGrandeur = dom.createElement("grandeur");
+            nodeListGrandeur.item(0).appendChild(newGrandeur);
+            newGrandeur.setAttribute("name", category.toUpperCase());
+            Element newListUnit = dom.createElement("liste_units");
+            newGrandeur.appendChild(newListUnit);
+
+            // Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
-             
+
             // this result will be a writing flux in a file
             Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-             
+
             // creation of the XML transormator
             Transformer transfo = null;
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
-            } catch(TransformerConfigurationException e) {
+            } catch (TransformerConfigurationException e) {
                 System.err.println("Impossible de cr�er un transformateur XML.");
                 System.exit(1);
             }
@@ -186,54 +187,55 @@ public class Utils {
             transfo.setOutputProperty(OutputKeys.INDENT, "yes");
             try {
                 transfo.transform(source, resultat);
-            } catch(TransformerException e) {
+            } catch (TransformerException e) {
                 System.err.println("La transformation a échoué : " + e);
                 System.exit(1);
             }
             properties.put(category, null);
-    	}
-    	initCategory();
+        }
+        initCategory();
     }
-    
+
     /**
      * Add a unit with this parameters in the xml file
+     *
      * @param unit
-     * @throws ParserConfigurationException 
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws FileNotFoundException 
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws FileNotFoundException
      */
-    public static void addUnit(Unit unit) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
-    	DocumentBuilderFactory dbf;
+    public static void addUnit(Unit unit) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+        DocumentBuilderFactory dbf;
         DocumentBuilder db;
         Document dom;
-        
-    	if(Utils.validUnit(unit)){
-    		dbf = DocumentBuilderFactory.newInstance();
+
+        if (Utils.validUnit(unit)) {
+            dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
             dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("grandeur");
             for (int i = 0; i <= nodeListGrandeur.getLength() - 1; i++) {
-            	if(nodeListGrandeur.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getCategory())){
-            		Element newUnit = dom.createElement("unit");
-            		nodeListGrandeur.item(i).getChildNodes().item(1).appendChild(newUnit);
-            		newUnit.setAttribute("name", unit.getName());
-            		newUnit.setAttribute("coeff", unit.getRatio().toString());
-            		newUnit.setAttribute("decalage", unit.getDecalage().toString());
-            	}
+                if (nodeListGrandeur.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getCategory())) {
+                    Element newUnit = dom.createElement("unit");
+                    nodeListGrandeur.item(i).getChildNodes().item(1).appendChild(newUnit);
+                    newUnit.setAttribute("name", unit.getName());
+                    newUnit.setAttribute("coeff", unit.getRatio().toString());
+                    newUnit.setAttribute("decalage", unit.getDecalage().toString());
+                }
             }
-           
-    		// Considering the "dom" document as the source of the XML transformation
+
+            // Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
-             
+
             // this result will be a writing flux in a file
             Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-             
+
             // creation of the XML transormator
             Transformer transfo = null;
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
-            } catch(TransformerConfigurationException e) {
+            } catch (TransformerConfigurationException e) {
                 System.err.println("Impossible de créer un transformateur XML.");
                 System.exit(1);
             }
@@ -247,164 +249,168 @@ public class Utils {
             transfo.setOutputProperty(OutputKeys.INDENT, "yes");
             try {
                 transfo.transform(source, resultat);
-            } catch(TransformerException e) {
+            } catch (TransformerException e) {
                 System.err.println("La transformation a échoué : " + e);
                 System.exit(1);
             }
-    	}
-    	initCategory();
+        }
+        initCategory();
     }
-    
+
     /**
      * Say if the category exist or not
+     *
      * @param category
      * @return true if the category exist
      */
-    public static boolean existCategory(String category){
-    	return properties.containsKey(category);
+    public static boolean existCategory(String category) {
+        return properties.containsKey(category);
     }
-    
+
     /**
      * say if the unit exists or not
+     *
      * @param unit
      * @return true if the unit is valid
      */
-    public static boolean existUnit(Unit unit){
-    	ArrayList<Unit> listeTemp = new ArrayList<Unit>();
-    	listeTemp = properties.get(unit.getCategory());
-    	if (listeTemp != null){
-    		for (Unit unitTemp : listeTemp){
-            	if (unitTemp.getName().equalsIgnoreCase(unit.getName())){
-            			return true;
-            	}
+    public static boolean existUnit(Unit unit) {
+        ArrayList<Unit> listeTemp = new ArrayList<Unit>();
+        listeTemp = properties.get(unit.getCategory());
+        if (listeTemp != null) {
+            for (Unit unitTemp : listeTemp) {
+                if (unitTemp.getName().equalsIgnoreCase(unit.getName())) {
+                    return true;
+                }
             }
-    	}
-    	return false;
+        }
+        return false;
     }
-    
+
     /**
      * say if the unit is valid or not
+     *
      * @param unit
      * @return true if the unit is valid
      */
-    public static boolean validUnit(Unit unit){
-    	ArrayList<Unit> listeTemp = new ArrayList<Unit>();
-    	if(unit.getName() == null && unit.getName().isEmpty() && unit.getCategory() == null && unit.getCategory().isEmpty()){
-    		return false;
-    	}
-    	else{
-    		listeTemp = properties.get(unit.getCategory());
-    		for (Unit unitTemp : listeTemp){
-        		if (unitTemp.getName().equalsIgnoreCase(unit.getName())){
-        			return false;
-        		}
-        	}
-    		
-    	}
-    	return true;
+    public static boolean validUnit(Unit unit) {
+        ArrayList<Unit> listeTemp = new ArrayList<Unit>();
+        if (unit.getName() == null && unit.getName().isEmpty() && unit.getCategory() == null && unit.getCategory().isEmpty()) {
+            return false;
+        } else {
+            listeTemp = properties.get(unit.getCategory());
+            for (Unit unitTemp : listeTemp) {
+                if (unitTemp.getName().equalsIgnoreCase(unit.getName())) {
+                    return false;
+                }
+            }
+
+        }
+        return true;
     }
-    
+
     /**
      * Delete a unit
+     *
      * @param unit
-     * @throws ParserConfigurationException 
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws FileNotFoundException 
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws FileNotFoundException
      */
-    public static void deleteUnit(Unit unit) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
-    	
-    	if(existUnit(unit)){
-    		
-	    	DocumentBuilderFactory dbf;
-	        DocumentBuilder db;
-	        Document dom;
-	
-			dbf = DocumentBuilderFactory.newInstance();
-	        db = dbf.newDocumentBuilder();
-	        dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
-	        NodeList nodeListGrandeur = dom.getElementsByTagName("grandeur");
-	        for (int i = 0; i <= nodeListGrandeur.getLength() - 1; i++) {
-	        	if(nodeListGrandeur.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getCategory())){
-	        		NodeList nodeListUnit = nodeListGrandeur.item(i).getChildNodes().item(1).getChildNodes();
-	        		for (int j = 0; j <= nodeListUnit.getLength() - 1; j++) {
-	        			if(nodeListUnit.item(j).getNodeName().equals("unit")){
-	        				if(nodeListUnit.item(j).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getName())){
-		                		nodeListGrandeur.item(i).getChildNodes().item(1).removeChild(nodeListUnit.item(j));
-		                	}
-	        			}
-	                }
-	        	}
-	        }
-	       
-    		// Considering the "dom" document as the source of the XML transformation
-	        Source source = new DOMSource(dom);
-	         
+    public static void deleteUnit(Unit unit) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+
+        if (existUnit(unit)) {
+
+            DocumentBuilderFactory dbf;
+            DocumentBuilder db;
+            Document dom;
+
+            dbf = DocumentBuilderFactory.newInstance();
+            db = dbf.newDocumentBuilder();
+            dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
+            NodeList nodeListGrandeur = dom.getElementsByTagName("grandeur");
+            for (int i = 0; i <= nodeListGrandeur.getLength() - 1; i++) {
+                if (nodeListGrandeur.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getCategory())) {
+                    NodeList nodeListUnit = nodeListGrandeur.item(i).getChildNodes().item(1).getChildNodes();
+                    for (int j = 0; j <= nodeListUnit.getLength() - 1; j++) {
+                        if (nodeListUnit.item(j).getNodeName().equals("unit")) {
+                            if (nodeListUnit.item(j).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getName())) {
+                                nodeListGrandeur.item(i).getChildNodes().item(1).removeChild(nodeListUnit.item(j));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Considering the "dom" document as the source of the XML transformation
+            Source source = new DOMSource(dom);
+
             // this result will be a writing flux in a file
-	        Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-	         
-	        // creation of the XML transformator
-	        Transformer transfo = null;
-	        try {
-	            transfo = TransformerFactory.newInstance().newTransformer();
-	        } catch(TransformerConfigurationException e) {
-	            System.err.println("Impossible de créer un transformateur XML.");
-	            System.exit(1);
-	        }
+            Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
+
+            // creation of the XML transformator
+            Transformer transfo = null;
+            try {
+                transfo = TransformerFactory.newInstance().newTransformer();
+            } catch (TransformerConfigurationException e) {
+                System.err.println("Impossible de créer un transformateur XML.");
+                System.exit(1);
+            }
 	        // configuration of the transformator
-	        // XML output
-	        transfo.setOutputProperty(OutputKeys.METHOD, "xml");
+            // XML output
+            transfo.setOutputProperty(OutputKeys.METHOD, "xml");
             // include an XML declaration
-	        transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-	        transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-	        // idente le fichier XML
-	        transfo.setOutputProperty(OutputKeys.INDENT, "yes");
-	        try {
-	            transfo.transform(source, resultat);
-	        } catch(TransformerException e) {
-	            System.err.println("La transformation a échoué : " + e);
-	            System.exit(1);
-	        }
-	        initCategory();
-    	}
+            transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+            transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+            // idente le fichier XML
+            transfo.setOutputProperty(OutputKeys.INDENT, "yes");
+            try {
+                transfo.transform(source, resultat);
+            } catch (TransformerException e) {
+                System.err.println("La transformation a échoué : " + e);
+                System.exit(1);
+            }
+            initCategory();
+        }
     }
-    
+
     /**
      * Delete a category
+     *
      * @param category
-     * @throws ParserConfigurationException 
-     * @throws IOException 
-     * @throws SAXException 
-     * @throws FileNotFoundException 
+     * @throws ParserConfigurationException
+     * @throws IOException
+     * @throws SAXException
+     * @throws FileNotFoundException
      */
-    public static void deleteCategory(String category) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException{
-    	DocumentBuilderFactory dbf;
+    public static void deleteCategory(String category) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
+        DocumentBuilderFactory dbf;
         DocumentBuilder db;
         Document dom;
-        
-    	if(existCategory(category)){
-    		dbf = DocumentBuilderFactory.newInstance();
+
+        if (existCategory(category)) {
+            dbf = DocumentBuilderFactory.newInstance();
             db = dbf.newDocumentBuilder();
             dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("liste_grandeurs");
             NodeList nodeGrandeurs = dom.getElementsByTagName("grandeur");
             for (int i = 0; i <= nodeGrandeurs.getLength() - 1; i++) {
-            	if(nodeGrandeurs.item(i).getAttributes().getNamedItem("name").getNodeValue().equalsIgnoreCase(category)){
-            		nodeListGrandeur.item(0).removeChild(nodeGrandeurs.item(i));
-            	}
+                if (nodeGrandeurs.item(i).getAttributes().getNamedItem("name").getNodeValue().equalsIgnoreCase(category)) {
+                    nodeListGrandeur.item(0).removeChild(nodeGrandeurs.item(i));
+                }
             }
-           
-    		// Considering the "dom" document as the source of the XML transformation
+
+            // Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
-             
+
             // this result will be a writing flux in a file
             Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-             
+
             // creation of the XML transformator
             Transformer transfo = null;
             try {
                 transfo = TransformerFactory.newInstance().newTransformer();
-            } catch(TransformerConfigurationException e) {
+            } catch (TransformerConfigurationException e) {
                 System.err.println("Impossible de créer un transformateur XML.");
                 System.exit(1);
             }
@@ -418,13 +424,13 @@ public class Utils {
             transfo.setOutputProperty(OutputKeys.INDENT, "yes");
             try {
                 transfo.transform(source, resultat);
-            } catch(TransformerException e) {
+            } catch (TransformerException e) {
                 System.err.println("La transformation a échoué : " + e);
                 System.exit(1);
             }
             properties.remove(category);
-    	}
-    	
+        }
+
     }
-    
+
 }

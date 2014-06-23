@@ -134,7 +134,7 @@ public class TestUtils {
 		//false "metre" already exist
 		assertEquals(false,Utils.validUnit(unitToTest));
 	}
-	
+
 	/**
 	 * Test method for {@link service.Utils#validUnit(unit.Unit)}.
 	 */
@@ -162,7 +162,7 @@ public class TestUtils {
 		Utils.deleteUnit(unitToDelete);
 		assertEquals(false, Utils.validUnit(unitToDelete));
 	}
-	
+
 	/**
 	 * Test method for {@link service.Utils#deleteCategory(unit.Unit)}.
 	 * @throws IOException 

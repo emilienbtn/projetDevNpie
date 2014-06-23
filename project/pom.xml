@@ -41,6 +41,12 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    
+    <scm>
+        <connection>scm:git:https://github.com/emilienbtn/projetDevNpie</connection>
+        <url>https://github.com/emilienbtn/projetDevNpie</url>
+        <developerConnection>scm:git:https://github.com/emilienbtn/projetDevNpie</developerConnection>
+    </scm>
 	
     <dependencies>
         <dependency>
