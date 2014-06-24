@@ -163,37 +163,9 @@ public class Utils {
             Element newListUnit = dom.createElement("liste_units");
             newGrandeur.appendChild(newListUnit);
 
-            // Considering the "dom" document as the source of the XML transformation
-            Source source = new DOMSource(dom);
-
-            // this result will be a writing flux in a file
-            Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-
-            // creation of the XML transormator
-            Transformer transfo = null;
-            try {
-                transfo = TransformerFactory.newInstance().newTransformer();
-            } catch (TransformerConfigurationException e) {
-                System.err.println("Impossible de cr�er un transformateur XML.");
-                System.exit(1);
-            }
-            // configuration of the transformator
-            // XML output
-            transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-            // include an XML declaration
-            transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            // indent the XML file
-            transfo.setOutputProperty(OutputKeys.INDENT, "yes");
-            try {
-                transfo.transform(source, resultat);
-            } catch (TransformerException e) {
-                System.err.println("La transformation a échoué : " + e);
-                System.exit(1);
-            }
-            properties.put(category, null);
+            transformXML(dom);
+            properties.put(category, new ArrayList<Unit>());
         }
-        initCategory();
     }
 
     /**
@@ -224,37 +196,9 @@ public class Utils {
                     newUnit.setAttribute("decalage", unit.getDecalage().toString());
                 }
             }
-
-            // Considering the "dom" document as the source of the XML transformation
-            Source source = new DOMSource(dom);
-
-            // this result will be a writing flux in a file
-            Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-
-            // creation of the XML transormator
-            Transformer transfo = null;
-            try {
-                transfo = TransformerFactory.newInstance().newTransformer();
-            } catch (TransformerConfigurationException e) {
-                System.err.println("Impossible de créer un transformateur XML.");
-                System.exit(1);
-            }
-            // configuration of the transformator
-            // XML output
-            transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-            // include an XML declaration
-            transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            // indent the XML file
-            transfo.setOutputProperty(OutputKeys.INDENT, "yes");
-            try {
-                transfo.transform(source, resultat);
-            } catch (TransformerException e) {
-                System.err.println("La transformation a échoué : " + e);
-                System.exit(1);
-            }
+            transformXML(dom);
+            initCategory();
         }
-        initCategory();
     }
 
     /**
@@ -341,35 +285,7 @@ public class Utils {
                     }
                 }
             }
-
-            // Considering the "dom" document as the source of the XML transformation
-            Source source = new DOMSource(dom);
-
-            // this result will be a writing flux in a file
-            Result resultat = new StreamResult(new File("src/main/resources/Properties.xml"));
-
-            // creation of the XML transformator
-            Transformer transfo = null;
-            try {
-                transfo = TransformerFactory.newInstance().newTransformer();
-            } catch (TransformerConfigurationException e) {
-                System.err.println("Impossible de créer un transformateur XML.");
-                System.exit(1);
-            }
-	        // configuration of the transformator
-            // XML output
-            transfo.setOutputProperty(OutputKeys.METHOD, "xml");
-            // include an XML declaration
-            transfo.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transfo.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            // idente le fichier XML
-            transfo.setOutputProperty(OutputKeys.INDENT, "yes");
-            try {
-                transfo.transform(source, resultat);
-            } catch (TransformerException e) {
-                System.err.println("La transformation a échoué : " + e);
-                System.exit(1);
-            }
+            transformXML(dom);
             initCategory();
         }
     }
@@ -399,7 +315,16 @@ public class Utils {
                     nodeListGrandeur.item(0).removeChild(nodeGrandeurs.item(i));
                 }
             }
-
+            transformXML(dom);
+            properties.remove(category);
+        }
+    }
+    
+    /**
+     * Write the change (delete or add) in the xml file
+     * @param dom the document to write
+     */
+    public static void transformXML(Document dom){
             // Considering the "dom" document as the source of the XML transformation
             Source source = new DOMSource(dom);
 
@@ -428,8 +353,5 @@ public class Utils {
                 System.err.println("La transformation a échoué : " + e);
                 System.exit(1);
             }
-            properties.remove(category);
-        }
-
     }
 }

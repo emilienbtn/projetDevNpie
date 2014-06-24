@@ -33,7 +33,7 @@
             <unit coeff="1" id="g" name="gramme"/>
             <unit coeff="453.59" id="lb" name="livre"/>
             <unit coeff="28.35" id="oz" name="once"/>
-            <unit coeff="10" id="test" name="test"/>
+            <unit coeff="35" id="test" name="test"/>
         </liste_units>
     </grandeur>
     <grandeur name="TEMPERATURE">
@@ -43,16 +43,4 @@
             <unit coeff="1" id="F" name="fahrenheit"/>
         </liste_units>
     </grandeur>
-
-
-
-
-
-
-
-
-
-<grandeur name="CATADD">
-<liste_units/>
-</grandeur>
 </liste_grandeurs>
