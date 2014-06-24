@@ -55,7 +55,7 @@ public class Utils {
     private static void initCategory() {
 
         DocumentBuilderFactory dbf;
-        DocumentBuilder db;
+        DocumentBuilder dbd;
         Document dom;
         Node node;
         XPath xPath;
@@ -68,8 +68,8 @@ public class Utils {
             properties = new HashMap<>();
             try {
                 dbf = DocumentBuilderFactory.newInstance();
-                db = dbf.newDocumentBuilder();
-                dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
+                dbd = dbf.newDocumentBuilder();
+                dom = dbd.parse(new FileInputStream("src/main/resources/Properties.xml"));
                 xPath = XPathFactory.newInstance().newXPath();
 
                 categoryList = (NodeList) xPath.compile("/liste_grandeurs/grandeur").evaluate(dom, XPathConstants.NODESET);
@@ -149,13 +149,13 @@ public class Utils {
      */
     public static void addCategory(String category) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
         DocumentBuilderFactory dbf;
-        DocumentBuilder db;
+        DocumentBuilder dbd;
         Document dom;
 
         if (!existCategory(category)) {
             dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-            dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
+            dbd = dbf.newDocumentBuilder();
+            dom = dbd.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("liste_grandeurs");
             Element newGrandeur = dom.createElement("grandeur");
             nodeListGrandeur.item(0).appendChild(newGrandeur);
@@ -207,13 +207,13 @@ public class Utils {
      */
     public static void addUnit(Unit unit) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
         DocumentBuilderFactory dbf;
-        DocumentBuilder db;
+        DocumentBuilder dbd;
         Document dom;
 
         if (Utils.validUnit(unit)) {
             dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-            dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
+            dbd = dbf.newDocumentBuilder();
+            dom = dbd.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("grandeur");
             for (int i = 0; i <= nodeListGrandeur.getLength() - 1; i++) {
                 if (nodeListGrandeur.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getCategory())) {
@@ -322,12 +322,12 @@ public class Utils {
         if (existUnit(unit)) {
 
             DocumentBuilderFactory dbf;
-            DocumentBuilder db;
+            DocumentBuilder dbd;
             Document dom;
 
             dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-            dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
+            dbd = dbf.newDocumentBuilder();
+            dom = dbd.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("grandeur");
             for (int i = 0; i <= nodeListGrandeur.getLength() - 1; i++) {
                 if (nodeListGrandeur.item(i).getAttributes().getNamedItem("name").getNodeValue().equals(unit.getCategory())) {
@@ -385,13 +385,13 @@ public class Utils {
      */
     public static void deleteCategory(String category) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
         DocumentBuilderFactory dbf;
-        DocumentBuilder db;
+        DocumentBuilder dbd;
         Document dom;
 
         if (existCategory(category)) {
             dbf = DocumentBuilderFactory.newInstance();
-            db = dbf.newDocumentBuilder();
-            dom = db.parse(new FileInputStream("src/main/resources/Properties.xml"));
+            dbd = dbf.newDocumentBuilder();
+            dom = dbd.parse(new FileInputStream("src/main/resources/Properties.xml"));
             NodeList nodeListGrandeur = dom.getElementsByTagName("liste_grandeurs");
             NodeList nodeGrandeurs = dom.getElementsByTagName("grandeur");
             for (int i = 0; i <= nodeGrandeurs.getLength() - 1; i++) {
@@ -432,5 +432,4 @@ public class Utils {
         }
 
     }
-
 }

@@ -164,7 +164,7 @@ public class TestUtils {
 	}
 
 	/**
-	 * Test method for {@link service.Utils#deleteCategory(unit.Unit)}.
+	 * Test method for {@link service.Utils#deleteCategory(category.String)}.
 	 * @throws IOException 
 	 * @throws SAXException 
 	 * @throws ParserConfigurationException 
